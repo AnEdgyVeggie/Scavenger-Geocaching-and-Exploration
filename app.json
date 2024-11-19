@@ -1,28 +1,50 @@
 {
   "expo": {
-    "name": "comp3074-project-Group_48",
+    "name": "Scavenger",
     "slug": "comp3074-project-Group_48",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/favicon.png",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#171C26"
     },
     "ios": {
+      "jsEngine": "jsc",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/favicon.png",
+        "backgroundColor": "#171C26"
+      },
+      "package": "com.anonymous.comp3074projectGroup_48"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Jersey10.ttf"
+          ],
+          "expo-dev-launcher":
+          {
+            "launchMode": "most-recent"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "aeed6c27-d2a7-4679-9792-4f6034036786"
+      }
     }
   }
 }
