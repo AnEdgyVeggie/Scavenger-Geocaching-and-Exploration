@@ -1,0 +1,6 @@
+COLORS: 
+#BCCF2B    -> 'SCAVENGER' yellow 
+#171C26    -> Theme background blue
+
+=============================================================
+
