@@ -7,14 +7,19 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 const POIList = (props) => {
 
-    const [ loaded, error] = Font.useFonts({
+    const [ loaded, error ] = Font.useFonts({
         'Jersey10': require('../../../assets/fonts/Jersey10.ttf')
     })
 
 
     const Item = ({title, index}) => (
         <View style={index % 2 === 0 ? POIStyle.listItemEven : POIStyle.listItemOdd} >
-            <TouchableOpacity onPress={() => props.navigation.navigate("Details")}>
+            <TouchableOpacity onPress={() => {
+                props.navigation.navigate("Details", {
+                    index: index
+                })
+                }}
+                >
                 <Text style={POIStyle.listItemText} >{title}</Text>
             </TouchableOpacity>
         </View>
@@ -27,7 +32,7 @@ const POIList = (props) => {
             </Text>
             <SafeAreaProvider style={POIStyle.listContainer}>      
                 <SafeAreaView style={POIStyle.listStyle}>
-                    <FlatList data={POIs.POIs} 
+                    <FlatList data={POIs} 
                     renderItem={({item, index}) => <Item title={item.name} index={index}/>} 
                     keyExtractor={item => item.id}/>
                 </SafeAreaView>
