@@ -1,59 +1,24 @@
-import {View, StyleSheet, FlatList, Text} from 'react-native'
+import {View, StyleSheet, FlatList, Text, TouchableOpacity} from 'react-native'
 import * as Font from "expo-font"
 import POIs from "../../../SampleDatasets/PointsOfInterest"
+import POIDetails from "./POIDetails"
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
-const POIList = () => {
+
+const POIList = (props) => {
 
     const [ loaded, error] = Font.useFonts({
         'Jersey10': require('../../../assets/fonts/Jersey10.ttf')
     })
 
-    const POIStyle = StyleSheet.create({
-        container: {
-            backgroundColor: "#171C26",
-            height: "100%"
-        },
-        title: {
-            color: "#BCCF2B",
-            fontSize: 72,
-            fontFamily: 'Jersey10',
-            marginRight: 50,
-            marginLeft: 50,
-            marginTop: 50,
-            marginBottom: 30
-        },
-        listItemEven: {
-            backgroundColor: "#171C26"
-        },
-        listItemOdd: {
-            backgroundColor: "#333C4D"
-        },
-        listItemText: {
-            color: "#FFF",
-            fontSize: 32,
-            margin: 7,
-            fontFamily: 'Jersey10',
-        },
-        listContainer: {
-            alignItems: "center",
-            justifyContent: "start",
-        },
-        listStyle: {
-            backgroundColor: "#999",
-            width: "80%",
-            height: "85%"
-        }
-    })
-    
 
     const Item = ({title, index}) => (
         <View style={index % 2 === 0 ? POIStyle.listItemEven : POIStyle.listItemOdd} >
-            <Text style={POIStyle.listItemText} >{title}</Text>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Details")}>
+                <Text style={POIStyle.listItemText} >{title}</Text>
+            </TouchableOpacity>
         </View>
     )
-
-    console.log(POIs.POIs[0])
 
     return (
         <View style={POIStyle.container}>
@@ -72,3 +37,41 @@ const POIList = () => {
 }
 
 export default POIList
+
+
+const POIStyle = StyleSheet.create({
+    container: {
+        backgroundColor: "#171C26",
+        height: "100%"
+    },
+    title: {
+        color: "#BCCF2B",
+        fontSize: 72,
+        fontFamily: 'Jersey10',
+        marginRight: 50,
+        marginLeft: 50,
+        marginTop: "20%",
+        marginBottom: 30
+    },
+    listItemEven: {
+        backgroundColor: "#171C26"
+    },
+    listItemOdd: {
+        backgroundColor: "#333C4D"
+    },
+    listItemText: {
+        color: "#FFF",
+        fontSize: 32,
+        margin: 7,
+        fontFamily: 'Jersey10',
+    },
+    listContainer: {
+        alignItems: "center",
+        justifyContent: "start",
+    },
+    listStyle: {
+        backgroundColor: "#999",
+        width: "80%",
+        height: "85%"
+    }
+})
