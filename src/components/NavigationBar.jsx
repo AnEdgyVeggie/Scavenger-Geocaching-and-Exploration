@@ -14,6 +14,7 @@ const Tab = createBottomTabNavigator()
 const screenOptions = {
     tabBarShowLabel: false,
     headerShown:false,
+
     tabBarStyle: {
       position: "absolute",
       bottom: 0,
@@ -29,8 +30,8 @@ const tabOptions = (icon, name) => {
     return {
         tabBarIcon: ({focused}) => {
             return(
-                <View style={{width: "300%", justifyContent: "baseline", alignItems:"center",
-                    position: "absolute", top: 0
+                <View style={{width: "300%", alignItems:"center",
+                    position: "absolute", top: 7
                     
                 }}> 
                     <Entypo name={icon} size={24} color={focused ? "#BCCF2B" : "#455806"} />
@@ -43,12 +44,12 @@ const tabOptions = (icon, name) => {
 
 const styles = StyleSheet.create({
     bottomBarTextSelected: {
-        fontSize: 10,
+        fontSize: 11,
         color: "#BCCF2B",
         textAlign: "center"
     },
     bottomBarTextNonSelected: {
-        fontSize: 10,
+        fontSize: 11,
         color: "#566017",
         textAlign: "center"
     }
@@ -59,7 +60,7 @@ const NavigationBar = () => {
     return (
         <NavigationContainer>
             <Tab.Navigator screenOptions={screenOptions} >
-                <Tab.Screen  name="Points Of Interest" component={POIStack} options={tabOptions("map", "Points of \nInterest")} />
+                <Tab.Screen  name="Points Of Interest" component={POIStack} options={tabOptions("map", "Locations")} />
                 <Tab.Screen name="Achievements" component={AchievementStack} options={tabOptions("price-ribbon", "Achievements")}/>
                 <Tab.Screen name="Options" component={Options} options={tabOptions("tools", "Options")} />
                 <Tab.Screen name="About" component={About} options={tabOptions("info", "About")} />
