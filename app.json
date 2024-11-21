@@ -15,7 +15,8 @@
     },
     "ios": {
       "jsEngine": "jsc",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "idk"
     },
     "android": {
       "adaptiveIcon": {
@@ -34,8 +35,7 @@
           "fonts": [
             "./assets/fonts/Jersey10.ttf"
           ],
-          "expo-dev-launcher":
-          {
+          "expo-dev-launcher": {
             "launchMode": "most-recent"
           }
         }
@@ -43,7 +43,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "aeed6c27-d2a7-4679-9792-4f6034036786"
+        "projectId": "5d8d11d3-c507-43b6-9d66-95c683620cd4"
       }
     }
   }
