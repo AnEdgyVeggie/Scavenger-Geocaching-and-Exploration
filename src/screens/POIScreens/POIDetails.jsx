@@ -1,11 +1,13 @@
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native'
+import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Linking} from 'react-native'
 import  POIs  from "../../../SampleDatasets/PointsOfInterest"
 import { Entypo } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import { fromAddress, geocode, RequestType, setDefaults } from 'react-geocode';
 
-const POIDetails = ({route}) => {
+const POIDetails = (props) => {
+
+    const { index } = props.route.params
 
     const [destinationLat, setDestinationLat] = useState(null)
     const [destinationLong, setDestinationLong] = useState(null)
@@ -20,8 +22,6 @@ const POIDetails = ({route}) => {
         generateLatLong()
     }, [])
     
-
-    const { index } = route.params;
 
     const pointOfInterest = POIs[index]
 
@@ -68,6 +68,21 @@ const POIDetails = ({route}) => {
         return icons
     }
 
+    const generateDifficultySection= () => {
+        <View style={POIDetailsStyle.difficultySection}>
+            <View style={POIDetailsStyle.tag}>
+                <View style={POIDetailsStyle.tagFront}></View>
+                <View style={POIDetailsStyle.tagEnd}>
+                    <Text style={POIDetailsStyle.tagText}>{difficultyText()}</Text>
+                </View>
+            </View>
+            <View style={POIDetailsStyle.stars}>
+                {generateDifficultyStars()}
+            </View>
+        </View>
+    }
+
+
     if (destinationLat === null || destinationLong === null) {
         return(
             <View style={POIDetailsStyle.container}>
@@ -78,21 +93,9 @@ const POIDetails = ({route}) => {
 
     else {
         return (
-            <View style={POIDetailsStyle.container}>
+            <ScrollView style={POIDetailsStyle.container}>
                 <Text style={POIDetailsStyle.title}>{pointOfInterest.name.toUpperCase()}</Text>
-
-                <View style={POIDetailsStyle.difficultySection}>
-                    <View style={POIDetailsStyle.tag}>
-                        <View style={POIDetailsStyle.tagFront}></View>
-                        <View style={POIDetailsStyle.tagEnd}>
-                            <Text style={POIDetailsStyle.tagText}>{difficultyText()}</Text>
-                        </View>
-                    </View>
-                    <View style={POIDetailsStyle.stars}>
-                        {generateDifficultyStars()}
-                    </View>
-                </View>
-
+                    {generateDifficultySection()}
                 <View style={POIDetailsStyle.addressSection}>
                     <Text style={POIDetailsStyle.headers}>ADDRESS</Text>
                     <Text style={POIDetailsStyle.genText} >{pointOfInterest.address}</Text>
@@ -102,8 +105,16 @@ const POIDetails = ({route}) => {
                     <Text style={POIDetailsStyle.headers}>INSTRUCTIONS</Text>
                     <Text style={POIDetailsStyle.genText} >{pointOfInterest.instructions}</Text>
                 </View>
+
                 <View style={POIDetailsStyle.instructionsSection}>
-                    <Text  style={POIDetailsStyle.headers}>VIEW MAP {'>'}</Text>
+                    <TouchableOpacity onPress={() => {
+                        const gURL = `https://www.google.com/maps/search/?api=1&query=${destinationLat},${destinationLong}`
+                        Linking.openURL(gURL)
+                    }}>
+                        
+                        <Text  style={POIDetailsStyle.headers}>VIEW MAP {'>'}</Text>
+
+                    </TouchableOpacity>
                     <MapView
                     style={POIDetailsStyle.mapStyle}
                     initialRegion={{
@@ -112,7 +123,8 @@ const POIDetails = ({route}) => {
                         latitudeDelta: 0.01,
                         longitudeDelta: 0.01,
                     }}
-                    customMapStyle={mapStyle}>
+                    // customMapStyle={mapStyle}
+                    >
                         <Marker
                             coordinate={{
                                 latitude: destinationLat || null,
@@ -122,13 +134,25 @@ const POIDetails = ({route}) => {
                     </MapView>
                 </View>
 
-                <View style={POIDetailsStyle.addressSection}>
-                    <TouchableOpacity>
+                <View style={POIDetailsStyle.instructionsSection}>
+                    <TouchableOpacity onPress={() => {
+                        props.navigation.navigate("Directions", {
+                            difficultySection: generateDifficultySection(),
+                            pointOfInterest: pointOfInterest,
+                            destinationLat: destinationLat,
+                            destinationLong: destinationLong,
+                            apiKey: "AIzaSyB7yqB5r1n3R05kGGntQzjZSb0Z8J6yYj0"
+                            // mapStyle: mapStyle
+                    })
+                    }}>
                         <Text style={POIDetailsStyle.headers}>GET DIRECTIONS{" >"}</Text>
                     </TouchableOpacity>
                 </View>
 
-            </View>
+                <View style={POIDetailsStyle.footer}>
+
+                </View>
+            </ScrollView>
         )
     }
 }
@@ -212,86 +236,89 @@ const POIDetailsStyle = StyleSheet.create({
         height: 200,
         marginRight: 20
       },
+    footer: {
+        height: 100
+    }
 })
 
 
-const mapStyle = [
-    {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-    {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-    {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-    {
-      featureType: 'administrative.locality',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}],
-    },
-    {
-      featureType: 'poi',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}],
-    },
-    {
-      featureType: 'poi.park',
-      elementType: 'geometry',
-      stylers: [{color: '#263c3f'}],
-    },
-    {
-      featureType: 'poi.park',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#6b9a76'}],
-    },
-    {
-      featureType: 'road',
-      elementType: 'geometry',
-      stylers: [{color: '#38414e'}],
-    },
-    {
-      featureType: 'road',
-      elementType: 'geometry.stroke',
-      stylers: [{color: '#212a37'}],
-    },
-    {
-      featureType: 'road',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#9ca5b3'}],
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry',
-      stylers: [{color: '#746855'}],
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.stroke',
-      stylers: [{color: '#1f2835'}],
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#f3d19c'}],
-    },
-    {
-      featureType: 'transit',
-      elementType: 'geometry',
-      stylers: [{color: '#2f3948'}],
-    },
-    {
-      featureType: 'transit.station',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}],
-    },
-    {
-      featureType: 'water',
-      elementType: 'geometry',
-      stylers: [{color: '#17263c'}],
-    },
-    {
-      featureType: 'water',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#515c6d'}],
-    },
-    {
-      featureType: 'water',
-      elementType: 'labels.text.stroke',
-      stylers: [{color: '#17263c'}],
-    },
-  ];
+// const mapStyle = [
+//     {elementType: 'geometry', stylers: [{color: '#92AAA4'}]},
+//     {elementType: 'labels.text.fill', stylers: [{color: '#131516'}]},
+//     {elementType: 'labels.text.stroke', stylers: [{color: '#ffffff'}]},
+//     {
+//       featureType: 'administrative.locality',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'poi',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'poi.park',
+//       elementType: 'geometry',
+//       stylers: [{color: '#648746'}],
+//     },
+//     {
+//       featureType: 'poi.park',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'road',
+//       elementType: 'geometry',
+//       stylers: [{color: '#A17272 '}],
+//     },
+//     {
+//       featureType: 'road',
+//       elementType: 'geometry.stroke',
+//       stylers: [{color: '#000000'}],
+//     },
+//     {
+//       featureType: 'road',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'road.highway',
+//       elementType: 'geometry',
+//       stylers: [{color: '#A17272'}],
+//     },
+//     {
+//       featureType: 'road.highway',
+//       elementType: 'geometry.stroke',
+//       stylers: [{color: '#000000'}],
+//     },
+//     {
+//       featureType: 'road.highway',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'transit',
+//       elementType: 'geometry',
+//       stylers: [{color: '#545492'}],
+//     },
+//     {
+//       featureType: 'transit.station',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'water',
+//       elementType: 'geometry',
+//       stylers: [{color: '#1F4256'}],
+//     },
+//     {
+//       featureType: 'water',
+//       elementType: 'labels.text.fill',
+//       stylers: [{color: '#131516'}],
+//     },
+//     {
+//       featureType: 'water',
+//       elementType: 'labels.text.stroke',
+//       stylers: [{color: '#FFFFFF'}],
+//     },
+//   ];

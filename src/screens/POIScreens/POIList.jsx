@@ -1,7 +1,6 @@
-import {View, StyleSheet, FlatList, Text, TouchableOpacity} from 'react-native'
+import { View, StyleSheet, FlatList, Text, TouchableOpacity} from 'react-native'
 import * as Font from "expo-font"
 import POIs from "../../../SampleDatasets/PointsOfInterest"
-import POIDetails from "./POIDetails"
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 
@@ -80,3 +79,4 @@ const POIStyle = StyleSheet.create({
         height: "85%"
     }
 })
+
