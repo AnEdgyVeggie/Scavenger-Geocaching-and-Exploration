@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     }
 })
 
-
+// Navigation hub for other screens.
 const NavigationBar = () => {
     return (
         <NavigationContainer>

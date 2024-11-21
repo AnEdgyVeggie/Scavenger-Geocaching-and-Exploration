@@ -38,7 +38,7 @@ const About = () => {
         <View style={AboutStyle.container} >
             <Text style={AboutStyle.titleText} >ABOUT</Text>
             <View style={AboutStyle.subContainer}>
-                <Text style={AboutStyle.aboutText} >SCAVENGER was created by {"\n"}three GBC students</Text>
+                <Text style={AboutStyle.aboutText} >SCAVENGER was created by {"\n"}three GBC students:</Text>
                 <View>
                     <Text style={AboutStyle.namesText} >AMANDA GURNEY</Text>
                     <Text style={AboutStyle.namesText} >TAYLOR MARTIN</Text>

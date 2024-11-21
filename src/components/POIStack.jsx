@@ -8,13 +8,11 @@ import POIDirections from "../screens/POIScreens/POIDirections"
 import POIEdit from "../screens/POIScreens/POIEdit";
 import POIManager from "../screens/POIScreens/POIManager"
 
-
 const Stack = createNativeStackNavigator();
 
 const screenOptions = {
     headerShown:false,
 }
-
 
 export const POIStack = () => {
     return (
