@@ -24,7 +24,7 @@ const AchievementsHub = (props) => {
                         <TouchableOpacity onPress={() => {
                             props.navigation.navigate("View")
                         }} style={AchievementHubStyle.content}>
-                            <Entypo name={"eye-with-line"} color={"#BCCF2B"} size={iconSize}/>
+                            <Entypo name={"eye"} color={"#BCCF2B"} size={iconSize}/>
                                 <Text style={AchievementHubStyle.sectionText}>View Achievements</Text>
                         </TouchableOpacity>
                     </View>
