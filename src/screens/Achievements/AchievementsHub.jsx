@@ -17,7 +17,6 @@ const AchievementsHub = (props) => {
                 Achievements{"\n"}Hub
             </Text>
 
-
             <View style={AchievementHubStyle.subContainer} >
                 <View style={AchievementHubStyle.column}> 
                     <View style={AchievementHubStyle.section}>
@@ -38,7 +37,6 @@ const AchievementsHub = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-
 
                 <View style={AchievementHubStyle.column}>
                     <View style={AchievementHubStyle.section}>

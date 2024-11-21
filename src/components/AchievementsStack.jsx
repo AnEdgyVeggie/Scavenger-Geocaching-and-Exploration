@@ -6,13 +6,11 @@ import SubmitAchievements from "../screens/Achievements/SubmitAchievements"
 import ViewAchievements from "../screens/Achievements/ViewAchievements"
 import AchievementsHub from "../screens/Achievements/AchievementsHub"
 
-
 const Stack = createNativeStackNavigator();
 
 const screenOptions = {
     headerShown:false,
 }
-
 
 export const AchievementStack = () => {
     return (
