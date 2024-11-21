@@ -55,7 +55,7 @@ const POIStyle = StyleSheet.create({
         fontFamily: 'Jersey10',
         marginRight: 50,
         marginLeft: 50,
-        marginTop: "20%",
+        marginTop: "10%",
         marginBottom: 30
     },
     listItemEven: {
