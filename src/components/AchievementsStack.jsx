@@ -5,6 +5,7 @@ import ShareAchievements from "../screens/Achievements/ShareAchievements"
 import SubmitAchievements from "../screens/Achievements/SubmitAchievements"
 import ViewAchievements from "../screens/Achievements/ViewAchievements"
 import AchievementsHub from "../screens/Achievements/AchievementsHub"
+import POIDetails from "../screens/POIScreens/POIDetails";
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ export const AchievementStack = () => {
             <Stack.Screen name="Share" component={ShareAchievements} options={screenOptions}/>
             <Stack.Screen name="Submit" component={SubmitAchievements} options={screenOptions}/>
             <Stack.Screen name="View" component={ViewAchievements} options={screenOptions}/>
+            <Stack.Screen name="Details" component={POIDetails} options={screenOptions}/>
         </Stack.Navigator>
     )
 }

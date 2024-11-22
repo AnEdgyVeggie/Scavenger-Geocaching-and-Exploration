@@ -69,17 +69,21 @@ const POIDetails = (props) => {
     }
 
     const generateDifficultySection= () => {
-        <View style={POIDetailsStyle.difficultySection}>
-            <View style={POIDetailsStyle.tag}>
-                <View style={POIDetailsStyle.tagFront}></View>
-                <View style={POIDetailsStyle.tagEnd}>
-                    <Text style={POIDetailsStyle.tagText}>{difficultyText()}</Text>
+
+        return (
+            <View style={POIDetailsStyle.difficultySection}>
+                <View style={POIDetailsStyle.tag}>
+                    <View style={POIDetailsStyle.tagFront}></View>
+                    <View style={POIDetailsStyle.tagEnd}>
+                        <Text style={POIDetailsStyle.tagText}>{difficultyText()}</Text>
+                    </View>
+                </View>
+                <View style={POIDetailsStyle.stars}>
+                    {generateDifficultyStars()}
                 </View>
             </View>
-            <View style={POIDetailsStyle.stars}>
-                {generateDifficultyStars()}
-            </View>
-        </View>
+
+        )
     }
 
 
@@ -166,16 +170,15 @@ const POIDetailsStyle = StyleSheet.create({
     },
     title: {
         color: "#BCCF2B",
-        fontSize: 80,
+        fontSize: 72,
         fontFamily: 'Jersey10',
         marginRight: 50,
-        marginLeft: 50,
-        marginTop: "10%",
+        marginLeft: 40,
         marginBottom: 20
     },
     difficultySection: {
         flexDirection: "row",
-        marginLeft: 50
+        marginLeft: 40
     },
     tag: {
         flexDirection: "row",
@@ -212,14 +215,14 @@ const POIDetailsStyle = StyleSheet.create({
         borderBottomWidth: 2,
         paddingTop: 30,
         paddingBottom: 30,
-        marginLeft: 50,
+        marginLeft: 40,
         marginRight: 40
     },
     instructionsSection: {
         flexDirection: "column",
         justifyContent: "center",
         paddingTop: 30,
-        marginLeft: 50,
+        marginLeft: 40,
         marginRight: 40
     },
     headers: {

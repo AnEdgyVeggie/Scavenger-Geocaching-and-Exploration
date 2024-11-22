@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo } from '@expo/vector-icons';
 import POIStack from './POIStack'
 import AchievementStack from "./AchievementsStack"
+import OptionsStack from './OptionsStack'
 
 const Tab = createBottomTabNavigator()
 
@@ -62,7 +63,7 @@ const NavigationBar = () => {
             <Tab.Navigator screenOptions={screenOptions} >
                 <Tab.Screen  name="Points Of Interest" component={POIStack} options={tabOptions("map", "Locations")} />
                 <Tab.Screen name="Achievements" component={AchievementStack} options={tabOptions("price-ribbon", "Achievements")}/>
-                <Tab.Screen name="Options" component={Options} options={tabOptions("tools", "Options")} />
+                <Tab.Screen name="Options" component={OptionsStack} options={tabOptions("tools", "Options")} />
                 <Tab.Screen name="About" component={About} options={tabOptions("info", "About")} />
             </Tab.Navigator>
         </NavigationContainer>
