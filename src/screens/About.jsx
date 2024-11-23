@@ -12,9 +12,8 @@ const About = () => {
             color: "#BCCF2B",
             fontSize: 72,
             fontFamily: 'Jersey10',
-            marginRight: 50,
-            marginLeft: 50,
-            marginTop: "20%",
+            marginRight: 20,
+            marginLeft: 40,
             marginBottom: 30
         },
         subContainer: {
