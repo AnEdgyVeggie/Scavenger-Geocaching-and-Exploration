@@ -14,12 +14,6 @@ const SubmitAchievements = (props) => {
     const [file, setFile] = useState(null);
     const [error, setError] = useState(null);
 
-
-
-
-
-
-
     const pickImage = async () => {
         const { status } = await ImagePicker.
             requestMediaLibraryPermissionsAsync();
@@ -45,10 +39,6 @@ const SubmitAchievements = (props) => {
             }
         }
     };
-
-
-
-
 
     const submitRating = async () => {
         await fetch(ACHIEVEMENT_API_ADDR,
@@ -90,12 +80,10 @@ const SubmitAchievements = (props) => {
                 </TouchableOpacity>
 
                     <TouchableOpacity style={SubmitAchievementsStyle.submitButton}
-                    onPress={() => {
-                        submitRating()
-                        props.navigation.navigate("Share", {
-                            pointOfInterest: pointOfInterest
-                        })
-                    }}>
+                    onPress={()=> {
+                        alert("Whoops! You need to upload a photo before submitting an achievement.")
+                    }}
+                    >
                         <Text style={SubmitAchievementsStyle.submitButtonText}>SUBMIT ACHIEVEMENT</Text>
                     </TouchableOpacity>
     
@@ -139,7 +127,6 @@ const SubmitAchievements = (props) => {
         )
 
     }
-
 
 }
 

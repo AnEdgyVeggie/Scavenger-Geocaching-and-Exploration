@@ -2,15 +2,19 @@ import { useState } from 'react'
 import {View, StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native'
 import { Dropdown } from 'react-native-element-dropdown';
 import  POIs  from "../../../SampleDatasets/PointsOfInterest"
+import email from 'react-native-email'
+// import { TwitterApi } from 'twitter-api-v2';
 
 
+// const twitterClient = new TwitterApi('OQNZW63Xn59yvq3VoRSFq06ay');
+// const readOnlyClient = twitterClient.readOnly;
 
 const ShareAchievements = (props) => {
 
     const {pointOfInterest } = props.route.params
 
     const [ shareMethod, setShareMethod ] = useState(null)
-    const [ email, setEmail ] = useState("")
+    const [ emailAddress, setEmail ] = useState("")
     const [ achievement, setAchievement ] = useState(pointOfInterest.name)
     
     
@@ -23,6 +27,19 @@ const ShareAchievements = (props) => {
         })
         return dropDownOptions
     } 
+
+    const handleEmail = () => {
+        const to = [emailAddress] // string or array of email addresses
+        email(to, {
+            // Optional additional arguments
+            cc: [], // string or array of email addresses
+            bcc: "", // string or array of email addresses
+            subject: 'I got an achievement!',
+            body: `Take a look at this achievement I got!   NAME: ${pointOfInterest.name}\n   ADDRESS: ${pointOfInterest.address}\n   GOAL: ${pointOfInterest.instructions}}`,
+            checkCanOpen: false // Call Linking.canOpenURL prior to Linking.openURL
+        }).catch(console.error)
+    
+    }
     
     
     const dropDownOptions = setDropdownOptions();
@@ -80,6 +97,10 @@ const ShareAchievements = (props) => {
                         <TextInput style={ShareAchievementsStyle.input} onChangeText={value => setEmail(value)} />
                     </View>
                 </View>
+
+                <TouchableOpacity style={ShareAchievementsStyle.button}  onPress={handleEmail}>
+                    <Text style={ShareAchievementsStyle.buttonText} >SEND</Text>
+                </TouchableOpacity>
 
             </View>
         )
