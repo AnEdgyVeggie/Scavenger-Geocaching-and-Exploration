@@ -7,7 +7,7 @@ import { fromAddress, geocode, RequestType, setDefaults } from 'react-geocode';
 
 const POIDetails = (props) => {
 
-    const { index } = props.route.params
+    const { item } = props.route.params
 
     const [destinationLat, setDestinationLat] = useState(null)
     const [destinationLong, setDestinationLong] = useState(null)
@@ -23,7 +23,7 @@ const POIDetails = (props) => {
     }, [])
     
 
-    const pointOfInterest = POIs[index]
+    const pointOfInterest = item
 
     const difficultyText = () => {
         switch (pointOfInterest["rating"]) {
@@ -69,17 +69,21 @@ const POIDetails = (props) => {
     }
 
     const generateDifficultySection= () => {
-        <View style={POIDetailsStyle.difficultySection}>
-            <View style={POIDetailsStyle.tag}>
-                <View style={POIDetailsStyle.tagFront}></View>
-                <View style={POIDetailsStyle.tagEnd}>
-                    <Text style={POIDetailsStyle.tagText}>{difficultyText()}</Text>
+
+        return (
+            <View style={POIDetailsStyle.difficultySection}>
+                <View style={POIDetailsStyle.tag}>
+                    <View style={POIDetailsStyle.tagFront}></View>
+                    <View style={POIDetailsStyle.tagEnd}>
+                        <Text style={POIDetailsStyle.tagText}>{pointOfInterest.tag.toUpperCase()}</Text>
+                    </View>
+                </View>
+                <View style={POIDetailsStyle.stars}>
+                    {generateDifficultyStars()}
                 </View>
             </View>
-            <View style={POIDetailsStyle.stars}>
-                {generateDifficultyStars()}
-            </View>
-        </View>
+
+        )
     }
 
 
@@ -123,7 +127,6 @@ const POIDetails = (props) => {
                         latitudeDelta: 0.01,
                         longitudeDelta: 0.01,
                     }}
-                    // customMapStyle={mapStyle}
                     >
                         <Marker
                             coordinate={{
@@ -142,7 +145,6 @@ const POIDetails = (props) => {
                             destinationLat: destinationLat,
                             destinationLong: destinationLong,
                             apiKey: "AIzaSyB7yqB5r1n3R05kGGntQzjZSb0Z8J6yYj0"
-                            // mapStyle: mapStyle
                     })
                     }}>
                         <Text style={POIDetailsStyle.headers}>GET DIRECTIONS{" >"}</Text>
@@ -166,16 +168,15 @@ const POIDetailsStyle = StyleSheet.create({
     },
     title: {
         color: "#BCCF2B",
-        fontSize: 80,
+        fontSize: 72,
         fontFamily: 'Jersey10',
         marginRight: 50,
-        marginLeft: 50,
-        marginTop: "10%",
+        marginLeft: 40,
         marginBottom: 20
     },
     difficultySection: {
         flexDirection: "row",
-        marginLeft: 50
+        marginLeft: 40
     },
     tag: {
         flexDirection: "row",
@@ -212,14 +213,14 @@ const POIDetailsStyle = StyleSheet.create({
         borderBottomWidth: 2,
         paddingTop: 30,
         paddingBottom: 30,
-        marginLeft: 50,
+        marginLeft: 40,
         marginRight: 40
     },
     instructionsSection: {
         flexDirection: "column",
         justifyContent: "center",
         paddingTop: 30,
-        marginLeft: 50,
+        marginLeft: 40,
         marginRight: 40
     },
     headers: {

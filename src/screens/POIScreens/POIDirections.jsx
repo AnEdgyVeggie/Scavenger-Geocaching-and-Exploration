@@ -165,13 +165,13 @@ const POIDetailsStyle = StyleSheet.create({
         fontSize: 80,
         fontFamily: 'Jersey10',
         marginRight: 50,
-        marginLeft: 50,
-        marginTop: "10%",
+        marginLeft: 40,
+        // marginTop: "10%",
         marginBottom: 20
     },
     difficultySection: {
         flexDirection: "row",
-        marginLeft: 50
+        marginLeft: 40
     },
     tag: {
         flexDirection: "row",
@@ -206,14 +206,14 @@ const POIDetailsStyle = StyleSheet.create({
         justifyContent: "center",
         paddingTop: 30,
         paddingBottom: 30,
-        marginLeft: 50,
+        marginLeft: 40,
         marginRight: 40
     },
     instructionsSection: {
         flexDirection: "column",
         justifyContent: "center",
         paddingTop: 30,
-        marginLeft: 50,
+        marginLeft: 40,
         marginRight: 40
     },
     headers: {

@@ -1,7 +1,8 @@
 import { View, StyleSheet, FlatList, Text, TouchableOpacity} from 'react-native'
 import * as Font from "expo-font"
-import POIs from "../../../SampleDatasets/PointsOfInterest"
+import POI_API_ADDR from "../../constants"
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { useEffect, useState } from 'react'
 
 
 const POIList = (props) => {
@@ -10,19 +11,40 @@ const POIList = (props) => {
         'Jersey10': require('../../../assets/fonts/Jersey10.ttf')
     })
 
+    const [POIs, setPOIs] = useState(null)
 
-    const Item = ({title, index}) => (
+    useEffect(() => {
+        retrievePOIs()
+    }, [POIs])
+
+
+    const retrievePOIs = async () => {
+        const req = await fetch(POI_API_ADDR)
+        const res = await req.json()
+        setPOIs(res)
+    }
+    
+    if (POIs === null) {
+        return(
+            <View style={POIStyle.container}>
+                <Text style={POIStyle.title}>LOADING...</Text>
+            </View>
+        )
+    }
+
+    const Item = ({title, item, index}) => (
         <View style={index % 2 === 0 ? POIStyle.listItemEven : POIStyle.listItemOdd} >
-            <TouchableOpacity onPress={() => {
+            <TouchableOpacity  onPressIn={() => {
                 props.navigation.navigate("Details", {
-                    index: index
-                })
+                    item: item
+                    })
                 }}
                 >
                 <Text style={POIStyle.listItemText} >{title}</Text>
             </TouchableOpacity>
         </View>
     )
+
 
     return (
         <View style={POIStyle.container}>
@@ -32,8 +54,8 @@ const POIList = (props) => {
             <SafeAreaProvider style={POIStyle.listContainer}>      
                 <SafeAreaView style={POIStyle.listStyle}>
                     <FlatList data={POIs} 
-                    renderItem={({item, index}) => <Item title={item.name} index={index}/>} 
-                    keyExtractor={item => item.id}/>
+                    renderItem={({item, index}) => <Item title={item.name} item={item} index={index}/>} 
+                    keyExtractor={item => item._id}/>
                 </SafeAreaView>
             </SafeAreaProvider>
         </View>
@@ -52,9 +74,8 @@ const POIStyle = StyleSheet.create({
         color: "#BCCF2B",
         fontSize: 72,
         fontFamily: 'Jersey10',
-        marginRight: 50,
-        marginLeft: 50,
-        marginTop: "10%",
+        marginRight: 20,
+        marginLeft: 40,
         marginBottom: 30
     },
     listItemEven: {
@@ -72,9 +93,10 @@ const POIStyle = StyleSheet.create({
     listContainer: {
         alignItems: "center",
         justifyContent: "start",
+        backgroundColor: "#171C26"
     },
     listStyle: {
-        backgroundColor: "#999",
+        backgroundColor: "#171C26",
         width: "80%",
         height: "85%"
     }
