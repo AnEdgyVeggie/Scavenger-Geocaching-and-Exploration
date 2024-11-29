@@ -7,13 +7,11 @@ import ViewAchievements from "../screens/Achievements/ViewAchievements"
 import AchievementsHub from "../screens/Achievements/AchievementsHub"
 import POIDetails from "../screens/POIScreens/POIDetails";
 
-
 const Stack = createNativeStackNavigator();
 
 const screenOptions = {
     headerShown:false,
 }
-
 
 export const AchievementStack = () => {
     return (

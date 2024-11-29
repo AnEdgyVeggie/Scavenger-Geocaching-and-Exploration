@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
     }
 })
 
-
+// Navigation hub for other screens.
 const NavigationBar = () => {
     return (
         <NavigationContainer>
             <Tab.Navigator screenOptions={screenOptions} >
-                <Tab.Screen  name="Points Of Interest" component={POIStack} options={tabOptions("map", "Locations")} />
+                <Tab.Screen name="POI" component={POIStack} options={tabOptions("map", "Locations")} />
                 <Tab.Screen name="Achievements" component={AchievementStack} options={tabOptions("price-ribbon", "Achievements")}/>
                 <Tab.Screen name="Options" component={OptionsStack} options={tabOptions("tools", "Options")} />
                 <Tab.Screen name="About" component={About} options={tabOptions("info", "About")} />

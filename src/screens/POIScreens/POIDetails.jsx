@@ -38,7 +38,7 @@ const POIDetails = (props) => {
             case 5:
                 return "HARD"
             default:
-                return "UNKNOWN"
+                return "UNRATED"
         }
     }
 
