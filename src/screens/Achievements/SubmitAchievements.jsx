@@ -1,46 +1,146 @@
-import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native'
+import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, PermissionsAndroid} from 'react-native'
 import  POIs  from "../../../SampleDatasets/PointsOfInterest"
 import { Entypo } from '@expo/vector-icons';
 import Achievement from  "../../../assets/images/achievement.png"
+import * as ImagePicker from "expo-image-picker"
+import { ACHIEVEMENT_API_ADDR } from '../../constants';
+import { useState } from 'react'
+
 
 const SubmitAchievements = (props) => {
 
-    console.log(props.route.params)
-
     const {pointOfInterest, difficultySection} = props.route.params
 
-    return(
-        <ScrollView style={SubmitAchievementsStyle.container}>
-        <Text style={SubmitAchievementsStyle.title}>{pointOfInterest.name.toUpperCase()}</Text>
-            {difficultySection}
-        <View style={SubmitAchievementsStyle.barredSection}>
-            <Text style={SubmitAchievementsStyle.headers}>ADDRESS</Text>
-            <Text style={SubmitAchievementsStyle.genText} >{pointOfInterest.address}</Text>
-        </View>
-
-        <View style={SubmitAchievementsStyle.section}>
-            <Text style={SubmitAchievementsStyle.headers} >REVIEW YOUR SUBMISSION</Text>
-
-            <Image source={require("../../../assets/images/achievement.png")}
-            style={SubmitAchievementsStyle.image}>
-
-            </Image>
+    const [file, setFile] = useState(null);
+    const [error, setError] = useState(null);
 
 
-            <TouchableOpacity style={SubmitAchievementsStyle.submitButton}
-            onPress={() => {
-                props.navigation.navigate("Share", {
-                    pointOfInterest: pointOfInterest
-                })
-            }}>
-                <Text style={SubmitAchievementsStyle.submitButtonText}>SUBMIT ACHIEVEMENT</Text>
-            </TouchableOpacity>
-        </View>
 
-        <View style={SubmitAchievementsStyle.footer}>
-        </View>
-    </ScrollView>
-    )
+
+
+
+
+    const pickImage = async () => {
+        const { status } = await ImagePicker.
+            requestMediaLibraryPermissionsAsync();
+
+            console.log("h1")
+        if (status !== "granted") {
+            console.log("h2")
+            Alert.alert(
+                "Permission Denied",
+                `Sorry, we need camera 
+                 roll permission to upload images.`
+            );
+        } else {
+            const result =
+            await ImagePicker.launchImageLibraryAsync();
+            if (!result.cancelled) {
+                console.log(result.assets[0].uri)
+                setFile(result.assets[0].uri);
+                setError(null);
+            } else {
+                console.log("h4")
+                setFile(null)
+            }
+        }
+    };
+
+
+
+
+
+    const submitRating = async () => {
+        await fetch(ACHIEVEMENT_API_ADDR,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "charset": "utf-8"
+                },
+                body: JSON.stringify(createPOSTBody())
+            }
+        )
+    }
+
+    const createPOSTBody = () => {
+        return {
+            achievement: pointOfInterest._id,
+            userID: "67343d1f5281770c0a644f5c"
+        }
+    }
+
+    if (file === null)   {
+        return(
+            <ScrollView style={SubmitAchievementsStyle.container}>
+            <Text style={SubmitAchievementsStyle.title}>{pointOfInterest.name.toUpperCase()}</Text>
+                {difficultySection}
+            <View style={SubmitAchievementsStyle.barredSection}>
+                <Text style={SubmitAchievementsStyle.headers}>ADDRESS</Text>
+                <Text style={SubmitAchievementsStyle.genText} >{pointOfInterest.address}</Text>
+            </View>
+    
+            <View style={SubmitAchievementsStyle.section}>
+                <Text style={SubmitAchievementsStyle.headers} >REVIEW YOUR SUBMISSION</Text>
+    
+                <TouchableOpacity  style={SubmitAchievementsStyle.photoUploadBox}
+                    onPress={pickImage}    >
+                    <Entypo name='plus' size={46} color={"#333C4D"} />
+                    <Text style={SubmitAchievementsStyle.photoUploadText}>Upload Photo</Text>
+                </TouchableOpacity>
+
+                    <TouchableOpacity style={SubmitAchievementsStyle.submitButton}
+                    onPress={() => {
+                        submitRating()
+                        props.navigation.navigate("Share", {
+                            pointOfInterest: pointOfInterest
+                        })
+                    }}>
+                        <Text style={SubmitAchievementsStyle.submitButtonText}>SUBMIT ACHIEVEMENT</Text>
+                    </TouchableOpacity>
+    
+            </View>
+    
+            <View style={SubmitAchievementsStyle.footer}>
+            </View>
+        </ScrollView>
+        )
+
+    } else {
+        return(
+            <ScrollView style={SubmitAchievementsStyle.container}>
+            <Text style={SubmitAchievementsStyle.title}>{pointOfInterest.name.toUpperCase()}</Text>
+                {difficultySection}
+            <View style={SubmitAchievementsStyle.barredSection}>
+                <Text style={SubmitAchievementsStyle.headers}>ADDRESS</Text>
+                <Text style={SubmitAchievementsStyle.genText} >{pointOfInterest.address}</Text>
+            </View>
+    
+            <View style={SubmitAchievementsStyle.section}>
+                <Text style={SubmitAchievementsStyle.headers} >REVIEW YOUR SUBMISSION</Text>
+    
+                <Image source={{uri: file}} style={SubmitAchievementsStyle.image} />
+
+                    <TouchableOpacity style={SubmitAchievementsStyle.submitButton}
+                    onPress={() => {
+                        submitRating()
+                        props.navigation.navigate("Share", {
+                            pointOfInterest: pointOfInterest
+                        })
+                    }}>
+                        <Text style={SubmitAchievementsStyle.submitButtonText}>SUBMIT ACHIEVEMENT</Text>
+                    </TouchableOpacity>
+    
+            </View>
+    
+            <View style={SubmitAchievementsStyle.footer}>
+            </View>
+        </ScrollView>
+        )
+
+    }
+
+
 }
 
 export default SubmitAchievements
@@ -141,5 +241,28 @@ const SubmitAchievementsStyle = StyleSheet.create({
     },
     footer: {
         height: 100
+    },
+    photoUploadBox: {
+        borderWidth: 2,
+        borderColor: "#333C4D",
+        height: 200,
+        width: "100%",
+        borderStyle: "dashed",
+        marginBottom: 30,
+        marginTop: 30,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    photoUploadText: {
+        color: "#333C4D",
+        fontSize: 22
+    },
+    image : {
+        borderWidth: 2,
+        borderColor: "#333C4D",
+        height: 200,
+        marginBottom: 30,
+        marginTop: 30,
     }
+    
 })

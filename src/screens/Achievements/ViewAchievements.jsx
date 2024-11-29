@@ -4,25 +4,9 @@ import { Entypo } from '@expo/vector-icons';
 
 const ViewAchievements = (props) => {
 
-    const { index } = props.route.params
-    const pointOfInterest = POIs[index]
+    const { item } = props.route.params
+    const pointOfInterest = item
 
-    const difficultyText = () => {
-        switch (pointOfInterest["rating"]) {
-            case 1:
-                return "EASY"
-            case 2:
-                return "EASY"
-            case 3:
-                return "MID"
-            case 4:
-                return "HARD"
-            case 5:
-                return "HARD"
-            default:
-                return "UNKNOWN"
-        }
-    }
 
     const generateDifficultyStars = () => {
         let icons = []
@@ -47,7 +31,7 @@ const ViewAchievements = (props) => {
                 <View style={ViewAchievementsStyle.tag}>
                     <View style={ViewAchievementsStyle.tagFront}></View>
                     <View style={ViewAchievementsStyle.tagEnd}>
-                        <Text style={ViewAchievementsStyle.tagText}>{difficultyText()}</Text>
+                        <Text style={ViewAchievementsStyle.tagText}>{pointOfInterest.tag.toUpperCase()}</Text>
                     </View>
                 </View>
                 <View style={ViewAchievementsStyle.stars}>
@@ -57,7 +41,6 @@ const ViewAchievements = (props) => {
 
         )
     }
-
 
 
     return(

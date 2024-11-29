@@ -1,13 +1,51 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native'
 import { useEffect, useState } from 'react'
-import POIs from '../../../SampleDatasets/PointsOfInterest'
+import POI_API_ADDR from "../../constants"
 import { Dropdown } from 'react-native-element-dropdown';
 
 const POIDelete = (props) => {
 
-    const [ currentPOI, setCurrentPOI ] = useState(POIs[0])
+    const [ currentPOI, setCurrentPOI ] = useState()
     const [ confirmed, setConfirmed ] = useState(false)
     const [ deleted, setDeleted ] =  useState(false)
+    const [POIs, setPOIs] = useState(null)
+
+    useEffect(() => {
+        retrievePOIs()
+    }, [])
+
+
+    const retrievePOIs = async () => {
+        const req = await fetch(POI_API_ADDR)
+        const res = await req.json()
+        setPOIs(res)
+        // console.log(res)
+        setCurrentPOI(res[0])
+    }
+
+
+    const submitPOIForDeletion = async () => {
+        const request = await fetch(POI_API_ADDR + "/" + currentPOI._id , {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "charset": "utf-8"
+            }
+        })
+        const response = await request.json()
+        console.log(response)
+    }
+
+
+
+    if (POIs === null) {
+        return(
+            <View style={POIDeleteStyle.container}>
+                <Text style={POIDeleteStyle.title}>LOADING...</Text>
+            </View>
+        )
+    }
+
 
 
 if (deleted) {
@@ -131,6 +169,7 @@ if (deleted) {
                     </View>
 
                     <TouchableOpacity style={POIDeleteStyle.deleteButtonActive} onPress={() => {
+                        submitPOIForDeletion()
                         setDeleted(true)
                     }}>
                         <Text style={POIDeleteStyle.buttonText} >DELETE POI</Text>
@@ -138,7 +177,7 @@ if (deleted) {
 
     
                     <TouchableOpacity style={POIDeleteStyle.return} onPress={() => {
-                                                props.navigation.pop()
+                        props.navigation.pop()
                     }}>
                         <Text style={POIDeleteStyle.genText} >{'<'} RETURN TO POI MANAGER</Text>
                     </TouchableOpacity>

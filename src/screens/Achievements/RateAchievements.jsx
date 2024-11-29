@@ -2,12 +2,15 @@ import {ScrollView, View, StyleSheet, Text, TouchableOpacity} from 'react-native
 import { Entypo } from '@expo/vector-icons';
 import { useEffect, useState } from 'react'
 
+
 const RateAchievements = (props) => {
 
     const {pointOfInterest, difficultySection} = props.route.params
 
     const [ starRating, setStarRating ] = useState(3)
     const [ stars, setStars ] = useState([])
+
+    console.log(pointOfInterest._id)
 
     useEffect(() => {
         generateDifficultyStars()
@@ -45,6 +48,25 @@ const RateAchievements = (props) => {
     }
 
 
+    const submitRating = async () => {
+        const request = await fetch(ACHIEVEMENT_API_ADDR,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "charset": "utf-8"
+                },
+            }
+        )
+        const response = await request.json()
+    }
+
+    const createPOSTBody = () => {
+        return {
+            achievement: pointOfInterest._id,
+            userID: "67468c78bd802d9380cb16db"
+        }
+    }
 
     return(
         <ScrollView style={RateAchievementsStyle.container}>

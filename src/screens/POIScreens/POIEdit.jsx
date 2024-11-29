@@ -1,24 +1,84 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native'
 import { useEffect, useState } from 'react'
+import POI_API_ADDR from "../../constants"
 import { Dropdown } from 'react-native-element-dropdown';
-import POIs from '../../../SampleDatasets/PointsOfInterest';
 
 const POIEdit = (props) => {
 
     const [ selectedPOI, setSelectedPOI ] = useState(null)
-    const [ currentPOI, setCurrentPOI ] = useState(POIs[0])
-    const [ rating, setRating ] = useState(1)
+    const [ currentPOI, setCurrentPOI ] = useState()
+    const [ rating, setRating ] = useState("easy")
     const [ poiName, setPOIName ] = useState("")
     const [ address, setAddress ] = useState()
     const [ instructions, setInstructions ] = useState()
     const [ poiUpdated, setPOIUpdated ] = useState(false)
+    
     const dropdownData = [
-        { label: "1 Star", value: 1},
-        { label: "2 Stars", value: 2},
-        { label: "3 Stars", value: 3},
-        { label: "4 Stars", value: 4},
-        { label: "5 Stars", value: 5},
+        { label: "Easy", value: "easy"},
+        { label: "Mid", value: "mid"},
+        { label: "Hard", value: "hard"}
     ]
+    const [POIs, setPOIs] = useState(null)
+
+    useEffect(() => {
+        retrievePOIs()
+    }, [])
+
+
+    const retrievePOIs = async () => {
+        const req = await fetch(POI_API_ADDR)
+        const res = await req.json()
+        setPOIs(res)
+        setCurrentPOI(res[0])
+        setPOIName(res[0].name)
+        setAddress(res[0].address)
+        setInstructions(res[0].instructions)
+        // console.log(res[0]._id)
+    }
+
+    const submitPOIUpdate = async () => {
+        console.log(address)
+        console.log(poiName)
+        console.log(instructions)
+        if (address === "" || instructions === "" || poiName === "") {
+            return
+        }
+
+        const poiObject = createPOIObject()
+        console.log(poiObject)
+
+        const request = await fetch(POI_API_ADDR + "/" + currentPOI._id , {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "charset": "utf-8"
+            },
+            body: JSON.stringify(poiObject)
+        })
+        
+        const response = await request.json()
+        setPOIUpdated(true)
+        console.log(response)
+    
+    }
+
+
+    const createPOIObject = () => {
+        return {
+            name: poiName,
+            address: address,
+            instructions: instructions
+        }
+    }
+
+    if (POIs === null) {
+        return(
+            <View style={POIEditStyle.container}>
+                <Text style={POIEditStyle.title}>LOADING...</Text>
+            </View>
+        )
+    }
+
 
     if (poiUpdated) {
         return(
@@ -54,13 +114,15 @@ const POIEdit = (props) => {
                                     data={POIs}
                                     valueField={"id"} labelField={"name"}
                                     value={currentPOI}
-                                    onChange={value => {setCurrentPOI(value)}}
+                                    onChange={value => {
+                                        setCurrentPOI(value)
+                                    }
+                                    }
                                     selectedTextStyle={POIEditStyle.inputText}
                                     />
                         </View>
 
                         <TouchableOpacity style={POIEditStyle.submitButton} onPress={() => {
-                            console.log(currentPOI)
                             setSelectedPOI(currentPOI)
                             setPOIName(currentPOI.name)
                             setAddress(currentPOI.address)
@@ -114,7 +176,7 @@ const POIEdit = (props) => {
 
                             <View style={POIEditStyle.inputSection}>
                                 <Text style={POIEditStyle.genText} >Address:</Text>
-                                <TextInput style={POIEditStyle.input} 
+                                <TextInput style={POIEditStyle.input } 
                                 value={address} onChangeText={value => {
                                     setAddress(value)
                                     }}/>
@@ -129,7 +191,8 @@ const POIEdit = (props) => {
                             </View>
 
                             <TouchableOpacity style={POIEditStyle.submitButton} onPress={() => {
-                                setPOIUpdated(true)
+                                submitPOIUpdate()
+
                             }}>
                                 <Text style={POIEditStyle.submitButtonText} >UPDATE POI</Text>
                             </TouchableOpacity>

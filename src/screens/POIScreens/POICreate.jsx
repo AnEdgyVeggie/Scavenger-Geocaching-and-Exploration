@@ -1,21 +1,57 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native'
 import { useEffect, useState } from 'react'
+import POI_API_ADDR from "../../constants"
 import { Dropdown } from 'react-native-element-dropdown';
 
 const POICreate = (props) => {
 
     const [ created, setCreated ] = useState(false)
-    const [ poiName, setPOIName ] = useState("")
-    const [ rating, setRating ] = useState(1)
 
+    const [ poiName, setPOIName ] = useState("")
+    const [ tag, setTag ] = useState("easy")
+    const [ address, setAddress ] = useState("")
+    const [ instructions, setInstructions ] = useState()
 
     const dropdownData = [
-        { label: "1 Star", value: 1},
-        { label: "2 Stars", value: 2},
-        { label: "3 Stars", value: 3},
-        { label: "4 Stars", value: 4},
-        { label: "5 Stars", value: 5},
+        { label: "Easy", value: "easy"},
+        { label: "Mid", value: "mid"},
+        { label: "Hard", value: "hard"}
     ]
+
+
+    const submitPOI = async () => {
+        if (address === "" || instructions === "" || poiName === "") {
+            return
+        }
+
+        const poiObject = createPOIObject()
+        console.log(poiObject)
+
+        const request = await fetch(POI_API_ADDR, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "charset": "utf-8"
+            },
+            body: JSON.stringify(poiObject)
+        })
+        
+        const response = await request.json()
+    
+        console.log(response)
+    
+    }
+
+    const createPOIObject = () => {
+        return {
+            name: poiName,
+            address: address,
+            instructions: instructions,
+            rating: 3,
+            tag: tag
+        }
+    }
+
 
 
     if (!created) {
@@ -29,10 +65,7 @@ const POICreate = (props) => {
                         <View style={POICreateStyle.inputSection}>
                             <Text style={POICreateStyle.genText} >POI Name:</Text>
                             <TextInput style={POICreateStyle.input} onChangeText={value => {
-                            console.log(value)
                             setPOIName(value)
-                            
-                            
                             }}/>
                         </View>
 
@@ -41,8 +74,8 @@ const POICreate = (props) => {
                             <Dropdown style={POICreateStyle.input}
                             data={dropdownData}
                             valueField={"value"} labelField={"label"}
-                            value={rating}
-                            onChange={value => setRating(value)}
+                            value={tag}
+                            onChange={value => setTag(value.value)}
                             selectedTextStyle={POICreateStyle.inputText}
                             
                             
@@ -51,15 +84,16 @@ const POICreate = (props) => {
 
                         <View style={POICreateStyle.inputSection}>
                             <Text style={POICreateStyle.genText} >Address:</Text>
-                            <TextInput style={POICreateStyle.input} />
+                            <TextInput style={POICreateStyle.input} onChangeText={(value) => setAddress(value)} />
                         </View>
 
                         <View style={POICreateStyle.inputSection}>
                             <Text style={POICreateStyle.genText} >Instructions:</Text>
-                            <TextInput style={POICreateStyle.input}/>
+                            <TextInput style={POICreateStyle.input} onChangeText={(value) => setInstructions(value)}/>
                         </View>
 
                         <TouchableOpacity style={POICreateStyle.submitButton} onPress={() => {
+                            submitPOI()
                             setCreated(true)
                         }}>
                             <Text style={POICreateStyle.submitButtonText} >CREATE NEW POI</Text>
