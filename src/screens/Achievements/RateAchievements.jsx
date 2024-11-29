@@ -47,27 +47,6 @@ const RateAchievements = (props) => {
         setStars(stars)
     }
 
-
-    const submitRating = async () => {
-        const request = await fetch(ACHIEVEMENT_API_ADDR,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "charset": "utf-8"
-                },
-            }
-        )
-        const response = await request.json()
-    }
-
-    const createPOSTBody = () => {
-        return {
-            achievement: pointOfInterest._id,
-            userID: "67468c78bd802d9380cb16db"
-        }
-    }
-
     return(
         <ScrollView style={RateAchievementsStyle.container}>
         <Text style={RateAchievementsStyle.title}>{pointOfInterest.name.toUpperCase()}</Text>
@@ -87,7 +66,10 @@ const RateAchievements = (props) => {
 
         <View style={RateAchievementsStyle.section}>
             <TouchableOpacity style={RateAchievementsStyle.submitButton} 
-                onPress={() => props.navigation.popToTop()}
+                onPress={() => {
+                    alert("Your review has been submitted!")
+                    props.navigation.popToTop()}
+                }
             >
                 <Text style={RateAchievementsStyle.submitButtonText}>SUBMIT REVIEW</Text>
             </TouchableOpacity>
