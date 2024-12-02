@@ -1,7 +1,5 @@
-import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Image, PermissionsAndroid} from 'react-native'
-import  POIs  from "../../../SampleDatasets/PointsOfInterest"
-import { Entypo } from '@expo/vector-icons';
-import Achievement from  "../../../assets/images/achievement.png"
+import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native'
+import { Entypo } from '@expo/vector-icons'
 import * as ImagePicker from "expo-image-picker"
 import { ACHIEVEMENT_API_ADDR } from '../../constants';
 import { useState } from 'react'
@@ -17,10 +15,7 @@ const SubmitAchievements = (props) => {
     const pickImage = async () => {
         const { status } = await ImagePicker.
             requestMediaLibraryPermissionsAsync();
-
-            console.log("h1")
         if (status !== "granted") {
-            console.log("h2")
             Alert.alert(
                 "Permission Denied",
                 `Sorry, we need camera 
@@ -30,11 +25,9 @@ const SubmitAchievements = (props) => {
             const result =
             await ImagePicker.launchImageLibraryAsync();
             if (!result.cancelled) {
-                console.log(result.assets[0].uri)
                 setFile(result.assets[0].uri);
                 setError(null);
             } else {
-                console.log("h4")
                 setFile(null)
             }
         }

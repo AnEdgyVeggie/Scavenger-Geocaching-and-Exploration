@@ -1,5 +1,4 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator, NavigationIndependentTree } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RateAchievements from "../screens/Achievements/RateAchievements"
 import ShareAchievements from "../screens/Achievements/ShareAchievements"
 import SubmitAchievements from "../screens/Achievements/SubmitAchievements"

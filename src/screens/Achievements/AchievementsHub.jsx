@@ -26,7 +26,6 @@ const AchievementsHub = (props) => {
     const Item = ({title, index, item}) => (
         <View style={index % 2 === 0 ? AchievementHubStyle.listItemEven : AchievementHubStyle.listItemOdd} >
             <TouchableOpacity onPressIn={() => {
-                console.log("hi")
                 props.navigation.navigate("View", {
                     item: item
                     })

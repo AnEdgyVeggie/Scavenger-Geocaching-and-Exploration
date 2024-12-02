@@ -1,15 +1,29 @@
-// import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import NavigationBar from './src/components/NavigationBar';
-// import * as DevClient from 'expo-dev-client';
+import AccountStack  from './src/components/AccountStack';
+import { useState, useEffect } from 'react'
+  export default function App() {
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <NavigationBar />
-    </View>
-  );
+    const [ loggedIn, setLoggedIn ] = useState(false)
+    const [ status, setStatus ] = useState(false)
+
+
+
+    if (loggedIn) {
+      return (
+        <View style={styles.container}>
+          <NavigationBar setLoggedIn={setLoggedIn} />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container} >
+          <AccountStack setLoggedIn={setLoggedIn} />
+        </View>
+      )
+    }
 }
+
 
 const styles = StyleSheet.create({
   container: {
