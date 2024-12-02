@@ -33,19 +33,14 @@ const POIEdit = (props) => {
         setPOIName(res[0].name)
         setAddress(res[0].address)
         setInstructions(res[0].instructions)
-        // console.log(res[0]._id)
     }
 
     const submitPOIUpdate = async () => {
-        console.log(address)
-        console.log(poiName)
-        console.log(instructions)
         if (address === "" || instructions === "" || poiName === "") {
             return
         }
 
         const poiObject = createPOIObject()
-        console.log(poiObject)
 
         const request = await fetch(POI_API_ADDR + "/" + currentPOI._id , {
             method: "PUT",
@@ -58,8 +53,6 @@ const POIEdit = (props) => {
         
         const response = await request.json()
         setPOIUpdated(true)
-        console.log(response)
-    
     }
 
 
