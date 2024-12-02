@@ -1,9 +1,8 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Linking} from 'react-native'
-import  POIs  from "../../../SampleDatasets/PointsOfInterest"
 import { Entypo } from '@expo/vector-icons';
 import MapView, { Marker } from 'react-native-maps';
 import { useEffect, useState } from 'react';
-import { fromAddress, geocode, RequestType, setDefaults } from 'react-geocode';
+import { geocode, RequestType, setDefaults } from 'react-geocode';
 
 const POIDetails = (props) => {
 

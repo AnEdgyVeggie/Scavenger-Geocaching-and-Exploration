@@ -19,7 +19,6 @@ const POIDelete = (props) => {
         const req = await fetch(POI_API_ADDR)
         const res = await req.json()
         setPOIs(res)
-        // console.log(res)
         setCurrentPOI(res[0])
     }
 
@@ -33,7 +32,6 @@ const POIDelete = (props) => {
             }
         })
         const response = await request.json()
-        console.log(response)
     }
 
 

@@ -1,48 +1,30 @@
 import { useState } from 'react'
 import {View, StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native'
-import { Dropdown } from 'react-native-element-dropdown';
-import  POIs  from "../../../SampleDatasets/PointsOfInterest"
 import email from 'react-native-email'
-// import { TwitterApi } from 'twitter-api-v2';
-
-
-// const twitterClient = new TwitterApi('OQNZW63Xn59yvq3VoRSFq06ay');
-// const readOnlyClient = twitterClient.readOnly;
 
 const ShareAchievements = (props) => {
 
     const {pointOfInterest } = props.route.params
+    console.log()
 
     const [ shareMethod, setShareMethod ] = useState(null)
     const [ emailAddress, setEmail ] = useState("")
     const [ achievement, setAchievement ] = useState(pointOfInterest.name)
     
-    
-    const setDropdownOptions =() => {
-        let dropDownOptions = []
-        POIs.forEach(poi => {
-            dropDownOptions.push({
-                label: poi.name, value: poi.name
-            })
-        })
-        return dropDownOptions
-    } 
 
     const handleEmail = () => {
-        const to = [emailAddress] // string or array of email addresses
+        const to = [emailAddress] 
         email(to, {
-            // Optional additional arguments
-            cc: [], // string or array of email addresses
-            bcc: "", // string or array of email addresses
+           
+            cc: [], 
+            bcc: "", 
             subject: 'I got an achievement!',
             body: `Take a look at this achievement I got!   NAME: ${pointOfInterest.name}\n   ADDRESS: ${pointOfInterest.address}\n   GOAL: ${pointOfInterest.instructions}}`,
-            checkCanOpen: false // Call Linking.canOpenURL prior to Linking.openURL
+            checkCanOpen: false 
         }).catch(console.error)
     
     }
-    
-    
-    const dropDownOptions = setDropdownOptions();
+
 
     if (shareMethod === null) {
         return(
@@ -81,14 +63,8 @@ const ShareAchievements = (props) => {
 
                     <View style={ShareAchievementsStyle.inputSection}>
                         <Text style={ShareAchievementsStyle.genText}>Sharing Achievement:</Text>
-                        <Dropdown 
-                            data={dropDownOptions}
-                            style={ShareAchievementsStyle.input}
-                            valueField={"value"} labelField={"label"}
-                            value={achievement}
-                            onChange={value => setAchievement(value)}
-                            selectedTextStyle={ShareAchievementsStyle.inputText}
-                            />
+                        <Text style={ShareAchievementsStyle.genText}>{pointOfInterest.name.toUpperCase()}</Text>
+                        <Text style={ShareAchievementsStyle.genText}>{pointOfInterest.address.toUpperCase()}</Text>
                     </View>
 
 
@@ -96,11 +72,11 @@ const ShareAchievements = (props) => {
                         <Text style={ShareAchievementsStyle.genText}>Email of friend:</Text>
                         <TextInput style={ShareAchievementsStyle.input} onChangeText={value => setEmail(value)} />
                     </View>
-                </View>
 
                 <TouchableOpacity style={ShareAchievementsStyle.button}  onPress={handleEmail}>
                     <Text style={ShareAchievementsStyle.buttonText} >SEND</Text>
                 </TouchableOpacity>
+                </View>
 
             </View>
         )
@@ -118,19 +94,12 @@ const ShareAchievements = (props) => {
 
                     <View style={ShareAchievementsStyle.inputSection}>
                         <Text style={ShareAchievementsStyle.genText}>Sharing Achievement:</Text>
-                        <Dropdown 
-                            data={dropDownOptions}
-                            style={ShareAchievementsStyle.input}
-                            valueField={"value"} labelField={"label"}
-                            value={achievement}
-                            onChange={value => setAchievement(value)}
-                            selectedTextStyle={ShareAchievementsStyle.inputText}
-                            />
+                        <Text style={ShareAchievementsStyle.genText}>{pointOfInterest.name.toUpperCase()}</Text>
+                        <Text style={ShareAchievementsStyle.genText}>{pointOfInterest.address.toUpperCase()}</Text>
+
                     </View>
 
                 </View>
-
-
             </View>
         )
     }

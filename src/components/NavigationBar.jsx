@@ -1,8 +1,5 @@
 import {View, Text, StyleSheet} from 'react-native'
-import POIList from '../screens/POIScreens/POIList'
-import ViewAchievements from  "../screens/Achievements/ViewAchievements"
 import About from '../screens/About'
-import Options from '../screens/Options'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo } from '@expo/vector-icons';
@@ -36,7 +33,7 @@ const tabOptions = (icon, name) => {
                     
                 }}> 
                     <Entypo name={icon} size={24} color={focused ? "#BCCF2B" : "#455806"} />
-                    <Text style={ focused?  styles.bottomBarTextSelected : styles.bottomBarTextNonSelected}>{name}</Text>
+                    <Text style={ focused ? styles.bottomBarTextSelected : styles.bottomBarTextNonSelected}>{name}</Text>
                 </View>
             )
         }
@@ -57,17 +54,16 @@ const styles = StyleSheet.create({
 })
 
 // Navigation hub for other screens.
-const NavigationBar = () => {
+const NavigationBar = ( setLoggedIn ) => {
     return (
         <NavigationContainer>
             <Tab.Navigator screenOptions={screenOptions} >
                 <Tab.Screen name="POI" component={POIStack} options={tabOptions("map", "Locations")} />
                 <Tab.Screen name="Achievements" component={AchievementStack} options={tabOptions("price-ribbon", "Achievements")}/>
-                <Tab.Screen name="Options" component={OptionsStack} options={tabOptions("tools", "Options")} />
+                <Tab.Screen name="Options" component={OptionsStack} options={tabOptions("tools", "Options")} initialParams={setLoggedIn}  />
                 <Tab.Screen name="About" component={About} options={tabOptions("info", "About")} />
             </Tab.Navigator>
         </NavigationContainer>
-        
     )
 }
 

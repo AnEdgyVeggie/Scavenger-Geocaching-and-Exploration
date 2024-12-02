@@ -1,5 +1,4 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity} from 'react-native'
-import { useEffect, useState } from 'react'
 
 const POIManager = (props) => {
 

@@ -13,10 +13,10 @@ const screenOptions = {
 }
 
 
-export const AchievementStack = () => {
+export const OptionsStack = (setLoggedIn) => {
     return (
         <Stack.Navigator initialRouteName="Options">
-            <Stack.Screen name="Options" component={Options} options={screenOptions}/>
+            <Stack.Screen name="Options" component={Options} options={screenOptions} initialParams={setLoggedIn} />
             <Stack.Screen name="Manage" component={POIManager} options={screenOptions}/>
             <Stack.Screen name="Create" component={POICreate} options={screenOptions}/>
             <Stack.Screen name="Delete" component={POIDelete} options={screenOptions}/>
@@ -25,8 +25,8 @@ export const AchievementStack = () => {
     )
 }
 
-export default App = () => {
+export default App = (setLoggedIn) => {
     return(
-        <AchievementStack />
+        <OptionsStack setLoggedIn={setLoggedIn} />
     )
 }

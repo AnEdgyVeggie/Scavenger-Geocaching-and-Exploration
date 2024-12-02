@@ -25,7 +25,6 @@ const RateAchievements = (props) => {
                     <TouchableOpacity style={RateAchievementsStyle.starStyle}
                     onPress={() => {
                         setStarRating(star)
-                        console.log(star)
                     }}
                     >
                         <Entypo key={star} name='star' color={"#BCCF2B"} size={36}></Entypo>
@@ -37,7 +36,6 @@ const RateAchievements = (props) => {
                     <TouchableOpacity style={RateAchievementsStyle.starStyle}
                     onPress={() => {
                         setStarRating(star)
-                        console.log(star)
                     }}>
                         <Entypo key={star} name='star' color={"white"} size={36}></Entypo>
                     </TouchableOpacity>

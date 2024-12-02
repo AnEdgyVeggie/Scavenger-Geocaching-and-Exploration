@@ -7,9 +7,8 @@ import MapViewDirections from 'react-native-maps-directions';
 
 const POIDirections = (props) => {
 
-    const {difficultySection, pointOfInterest, destinationLat, destinationLong,
-        apiKey
-        // mapStyle
+    const {
+        difficultySection, pointOfInterest, destinationLat, destinationLong,apiKey
     } = props.route.params
 
     const [ userLocation, setUserLocation ] = useState(null)
@@ -36,7 +35,6 @@ const POIDirections = (props) => {
             
             )
             if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                console.log("success")
                 getCurrentLocation()
             } else {
                 console.log("failure")
@@ -48,7 +46,6 @@ const POIDirections = (props) => {
     }
     
     const getCurrentLocation = () => {
-        console.log("Getting location.....")
         Geolocation.getCurrentPosition(position => {
             const {latitude, longitude} = position.coords;
             setUserLocation({latitude, longitude})

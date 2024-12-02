@@ -2,7 +2,12 @@ import { View, StyleSheet, Text, TouchableOpacity} from 'react-native'
 
 const Options = (props) => {
 
+    const { setLoggedIn } = props.route.params.setLoggedIn.route.params
 
+    const setLogout = async () => {
+        setLoggedIn(false)
+    }
+    
 
     return (
         <View style={OptionsStyle.container}>
@@ -18,12 +23,13 @@ const Options = (props) => {
                 >
                     <Text style={OptionsStyle.genText}>POINT OF INTEREST MANAGEMENT{" >"}</Text>
                 </TouchableOpacity>
-
-
             </View>
 
             <View style={OptionsStyle.buttonSection}>
-                <TouchableOpacity style={OptionsStyle.button}>
+                <TouchableOpacity style={OptionsStyle.button} onPress={() => {
+                    setLogout()
+                }
+                }>
                     <Text style={OptionsStyle.buttonText}>LOGOUT</Text>
                 </TouchableOpacity>
             </View>

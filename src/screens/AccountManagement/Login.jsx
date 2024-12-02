@@ -1,22 +1,20 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity, TextInput} from 'react-native'
 import { useEffect, useState } from 'react'
 import { USER_API_ADDR } from "../../constants"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Login = ( props ) => {
-    
-    const {setLoggedIn} = props.route.params.setLoggedIn
 
     const [ email, setEmail ] = useState("")
     const [ password, setPassword ] = useState("")
     const [ error, setError ] = useState("")
 
+    const {setLoggedIn} = props.route.params.setLoggedIn
 
     const submitLogin = async () => {
-        // console.log(email)
-        // console.log(password)
         const reqBody = createLoginObject()
 
-        const request = await fetch("https://one01479568-comp3123-assignment1.onrender.com/api/v1/user/login", {
+        const request = await fetch(USER_API_ADDR + "/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -25,8 +23,15 @@ const Login = ( props ) => {
             body: JSON.stringify(reqBody)
         })
         const response = await request.json()
-        console.log(response.status)
         if (response.status === 200) {
+            try {
+                await AsyncStorage.setItem(
+                    "LOGGED_IN", "true"
+                )
+                setLoggedIn(true)
+            } catch (e){
+                console.log(e)
+            }
 
         } else {
             setError("Invalid email or password")

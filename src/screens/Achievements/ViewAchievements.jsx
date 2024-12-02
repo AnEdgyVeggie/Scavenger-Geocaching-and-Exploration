@@ -1,5 +1,4 @@
 import {ScrollView, View, StyleSheet, Text, TouchableOpacity, Linking} from 'react-native'
-import  POIs  from "../../../SampleDatasets/PointsOfInterest"
 import { Entypo } from '@expo/vector-icons';
 
 const ViewAchievements = (props) => {
