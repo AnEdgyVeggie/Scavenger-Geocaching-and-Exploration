@@ -1,14 +1,11 @@
-# You might need to run a few commands to get going here
+# Scavenger
 
-`npx react-native-asset` *this should make sure that custom fonts load in properly*
+## A React Native project developed by: 
+- Amanda Gurney
+- Taylor Martin
+- Ethan Sylvester
 
-# There are packages installed that will cause problems if you are not running in a dev environment.
-## to run in a dev env do the following:
-- go to https://expo.dev/accounts/anedgyveggie/projects/comp3074-project-Group_48/builds/97a0330b-24cb-4db1-b1e1-5f031dbdf966
-- click 'install' and install on your device (you can do this in an emulator as well)
-- instead of running the above `npx expo start -go`, run `npx expo start` and check the output to see if you are running in 'go' or 'dev'
-- if running in 'go', press 's' to switch to dev
-- press 'a' with your emulator running, or device plugged in (your device will need to have USB debugging enabled)
+# Due to the difficulty of getting expo dev to work properly, and APK is included in the files for you to download, as well as from Expo App Services at the following link:
 
-  this this bring up Expo's server finder. See if you can see your server on that screen, and select 'Scavenger'
-  The app should boot safely now
+https://expo.dev/artifacts/eas/wuWnhQsqHufzK8HpSnUdrS.apk
+
